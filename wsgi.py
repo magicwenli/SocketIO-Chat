@@ -2,7 +2,8 @@ import os
 
 from dotenv import load_dotenv
 
-from app import socketio, create_app
+from app import create_app
+from app.extends import socketio
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 # print(dotenv_path)

@@ -4,7 +4,7 @@ from flask import Blueprint, session, redirect, url_for, render_template, reques
 from flask_login import current_user
 from flask_socketio import emit, join_room, leave_room
 
-from app import socketio
+from app.extends import socketio
 from app.forms import RoomForm
 
 chat_bp = Blueprint('chat', __name__)
