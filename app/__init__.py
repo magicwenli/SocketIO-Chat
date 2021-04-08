@@ -14,8 +14,8 @@ def create_app(debug=False, config_name=None):
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
     app = Flask(__name__)
-    app.debug = debug
     app.config.from_object(config[config_name])
+    app.debug = debug
 
     reg_blueprints(app)
     reg_extensions(app)

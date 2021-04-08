@@ -21,6 +21,7 @@ class BaseConfig(object):
 
     CKEDITOR_ENABLE_CSRF = True
     CKEDITOR_FILE_UPLOADER = 'admin.upload_image'
+    FRIENDS_PER_PAGE=10
 
     BLUELOG_SLOW_QUERY_THRESHOLD = 1
 

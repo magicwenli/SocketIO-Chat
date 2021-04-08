@@ -1,11 +1,12 @@
 from datetime import datetime
 
-from flask import Blueprint, session, redirect, url_for, render_template, request
+from flask import Blueprint, session, redirect, url_for, render_template, request, current_app
 from flask_login import current_user
 from flask_socketio import emit, join_room, leave_room
 
 from app.extends import socketio
 from app.forms import RoomForm
+from app.models import User
 
 chat_bp = Blueprint('chat', __name__)
 
@@ -22,18 +23,28 @@ def index():
             return redirect(url_for('.chat'))
         elif request.method == 'GET':
             form.room.data = session.get('room', '')
-        return render_template('index.html', form=form)
+        return render_template('selete_room.html', form=form)
 
 
 @chat_bp.route('/chat')
 def chat():
+    # TODO 第一次登陆后不能直接进入聊天室，需要刷新一次
     """Chat room. The user's name and room must be stored in
     the session."""
     name = current_user.username
     room = session.get('room', '')
     if name == '' or room == '':
         return redirect(url_for('.index'))
-    return render_template('chat.html', name=name, room=room)
+    return render_template('chatroom.html', name=name, room=room)
+
+@chat_bp.route('/layout')
+def layout():
+    page = request.args.get('page', 1, type=int)
+    per_page = current_app.config['FRIENDS_PER_PAGE']
+    pagination = User.query.order_by(User.timestamp.desc()).paginate(page, per_page=per_page)
+    onlion = pagination.items
+    return render_template('base_client.html',pagination=pagination,onlion=onlion)
+
 
 
 @socketio.on('joined', namespace='/chat')

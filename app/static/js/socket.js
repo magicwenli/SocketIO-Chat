@@ -21,7 +21,8 @@ $(document).ready(function () {
         }
     });
 });
-
+// TODO 记录在线人数和在线群组数
+// https://stackoverflow.com/questions/32134623/socket-io-determine-if-a-user-is-online-or-offline
 function leave_room() {
     socket.emit('left', {}, function () {
         socket.disconnect();

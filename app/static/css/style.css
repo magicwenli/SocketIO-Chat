@@ -53,3 +53,14 @@ footer {
 #submit {
     margin-top: 10px
 }
+.pagination,
+.btn-group {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.btn-group-justified {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+}
