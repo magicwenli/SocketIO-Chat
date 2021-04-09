@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fe9e218-0f10-4521-87b3-e89fa541effa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/extends.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/extends.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main/events.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main/events.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/js/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/chat/_talk.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_talk.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/chatroom.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chatroom.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/wsgi.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +192,7 @@
       <workItem from="1617807026849" duration="11948000" />
       <workItem from="1617848041732" duration="6323000" />
       <workItem from="1617890741973" duration="50000" />
-      <workItem from="1617936548494" duration="8072000" />
+      <workItem from="1617936548494" duration="8887000" />
     </task>
     <task id="LOCAL-00001" summary="add README.md &amp; generate requirements.txt">
       <created>1617817002795</created>
@@ -209,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617946678403</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="advance">
+      <created>1617947015632</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617947015632</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +267,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask__wsgi_py_app_.coverage" NAME="Flask (app:app) Coverage Results" MODIFIED="1617936842996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask_SocketIO_Chat_master.coverage" NAME="Flask-SocketIO-Chat-master Coverage Results" MODIFIED="1617939994321" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask_SocketIO_Chat_master.coverage" NAME="Flask-SocketIO-Chat-master Coverage Results" MODIFIED="1617947691320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

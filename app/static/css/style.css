@@ -53,11 +53,13 @@ footer {
 #submit {
     margin-top: 10px
 }
+
 .pagination,
 .btn-group {
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
 .btn-group-justified {
     display: table;
     width: 100%;
@@ -68,11 +70,11 @@ footer {
 #people {
     max-height: 400px;
     margin-bottom: 10px;
-    overflow:scroll;
+    overflow: scroll;
     -webkit-overflow-scrolling: touch;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     width: 12px;
 }
 

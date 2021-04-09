@@ -29,4 +29,5 @@ function leave_room() {
 
         // go back to the login page
         window.location.href = Flask.url_for("chat.index");
-});}
+    });
+}

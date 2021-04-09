@@ -5,7 +5,7 @@ from flask import Flask
 
 from app.blueprints.auth import auth_bp
 from app.blueprints.chat import chat_bp
-from app.extends import db, moment, ckediter, socketio, login_manager, bootstrap,jsglue
+from app.extends import db, moment, ckediter, socketio, login_manager, bootstrap, jsglue
 from app.settings import config
 
 
@@ -36,6 +36,7 @@ def reg_extensions(app):
     login_manager.init_app(app)
     bootstrap.init_app(app)
     jsglue.init_app(app)
+
 
 def reg_commands(app):
     @app.cli.command()

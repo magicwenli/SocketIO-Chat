@@ -21,13 +21,13 @@ class BaseConfig(object):
 
     CKEDITOR_ENABLE_CSRF = True
 
-    FRIENDS_PER_PAGE=10
-
+    FRIENDS_PER_PAGE = 10
 
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.db')
     FLASK_DEBUG = True
+
 
 class TestingConfig(BaseConfig):
     TESTING = True

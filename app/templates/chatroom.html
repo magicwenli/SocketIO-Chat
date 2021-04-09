@@ -3,10 +3,19 @@
     Flask-SocketIO-Chat
 {% endblock %}
 {% block content %}
-    <h1>Room: {{ room }}</h1>
-    <textarea id="chat" cols="80" rows="20"></textarea><br><br>
-    <input id="text" size="80" placeholder="Enter your message here"><br><br>
-    <a href="#" onclick="leave_room();">Leave this room</a>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="display-3">Room: {{ room }}</h1>
+        </div>
+        <textarea class="form-control" id="chat" cols="80" rows="20"></textarea><br><br>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Message: </span>
+            </div>
+            <input id="text" type="text" class="form-control">
+        </div>
+        <a href="#" onclick="leave_room();">Leave this room</a>
+    </div>
 {% endblock %}
 {% block scripts %}
     {{ super() }}
