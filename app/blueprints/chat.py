@@ -40,11 +40,7 @@ def chat():
 
 @chat_bp.route('/layout')
 def layout():
-    page = request.args.get('page', 1, type=int)
-    per_page = current_app.config['FRIENDS_PER_PAGE']
-    pagination = User.query.order_by(User.id.desc()).paginate(1, per_page=1)
-    onlion = pagination.items
-    return render_template('base_client.html', pagination=pagination, onlion=onlion)
+    return render_template('chat/client.html')
 
 
 @socketio.on('joined', namespace='/chat')

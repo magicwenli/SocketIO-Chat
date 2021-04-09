@@ -31,16 +31,22 @@
 </nav>
 
 <main>
-    {% for message in get_flashed_messages() %}
-        <div class="alert">{{ message }}</div>
-    {% endfor %}
-    {% block content %}{% endblock %}
-</main>
-<footer>
-    {% block footer %}
-        {% include "footer.html" %}
+    {% block main %}
+        {% for message in get_flashed_messages() %}
+            <div class="container">
+                <div class="alert alert-primary justify-content-md-center" role="alert">{{ message }}</div>
+            </div>
+        {% endfor %}
+        {% block content %}{% endblock %}
     {% endblock %}
-</footer>
+</main>
+{% block footer_ %}
+    <footer>
+        {% block footer %}
+            {% include "footer.html" %}
+        {% endblock %}
+    </footer>
+{% endblock %}
 {% block scripts %}
     {{ bootstrap.load_js() }}
 {% endblock %}
