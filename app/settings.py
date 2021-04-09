@@ -20,18 +20,14 @@ class BaseConfig(object):
     SQLALCHEMY_RECORD_QUERIES = True
 
     CKEDITOR_ENABLE_CSRF = True
-    CKEDITOR_FILE_UPLOADER = 'admin.upload_image'
+
     FRIENDS_PER_PAGE=10
 
-    BLUELOG_SLOW_QUERY_THRESHOLD = 1
-
-    BLUELOG_UPLOAD_PATH = os.path.join(basedir, 'uploads')
-    BLUELOG_ALLOWED_IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
 
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.db')
-
+    FLASK_DEBUG = True
 
 class TestingConfig(BaseConfig):
     TESTING = True

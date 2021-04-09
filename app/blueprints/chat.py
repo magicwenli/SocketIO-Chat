@@ -23,7 +23,7 @@ def index():
             return redirect(url_for('.chat'))
         elif request.method == 'GET':
             form.room.data = session.get('room', '')
-        return render_template('selete_room.html', form=form)
+        return render_template('select_room.html', form=form)
 
 
 @chat_bp.route('/chat')
@@ -34,14 +34,14 @@ def chat():
     name = current_user.username
     room = session.get('room', '')
     if name == '' or room == '':
-        return redirect(url_for('.index'))
+        return redirect(url_for('chat.index'))
     return render_template('chatroom.html', name=name, room=room)
 
 @chat_bp.route('/layout')
 def layout():
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['FRIENDS_PER_PAGE']
-    pagination = User.query.order_by(User.timestamp.desc()).paginate(page, per_page=per_page)
+    pagination = User.query.order_by(User.id.desc()).paginate(1, per_page=1)
     onlion = pagination.items
     return render_template('base_client.html',pagination=pagination,onlion=onlion)
 

@@ -64,3 +64,19 @@ footer {
     table-layout: fixed;
     border-collapse: separate;
 }
+
+#people {
+    max-height: 400px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+::-webkit-scrollbar{
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #7d7979;
+    border-radius: 3px;
+}

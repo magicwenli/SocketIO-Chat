@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_moment import Moment
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
+from flask_jsglue import JSGlue
 
 db = SQLAlchemy()
 ckediter = CKEditor()
@@ -11,7 +12,7 @@ moment = Moment()
 socketio = SocketIO()
 login_manager = LoginManager()
 bootstrap = Bootstrap()
-
+jsglue=JSGlue()
 
 @login_manager.user_loader
 def load_user(user_id):
