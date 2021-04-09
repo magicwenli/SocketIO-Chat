@@ -122,6 +122,10 @@ footer {
     flex: 2;
 }
 
+.main .chat-body .chat-content::-webkit-scrollbar {
+    width: 0;
+}
+
 .fade {
     transition: opacity 0.15s linear;
 }
@@ -172,4 +176,7 @@ li {
     font-size: 12px;
 }
 
-
+#message-textarea {
+    resize: none;
+    border-radius: 4px;
+}
