@@ -1,0 +1,18 @@
+<li class="active">
+    <a href="#" class="card">
+        <div class="card-body">
+            <div class="media">
+                <div class="avatar me-3">
+                    <img class="avatar sm rounded" src="{{ user.gravatar }}"
+                         data-href="{{ url_for('chat.get_profile', user_id=message.author.id) }}">
+                </div>
+                <div class="media-body overflow-hidden">
+                    <div class="d-flex align-items-center mb-1">
+                        <h6 class="text-truncate mb-0 me-auto">{{ user.username }}</h6>
+                    </div>
+                    <div class="text-truncate">{{ user.about }}</div>
+                </div>
+            </div>
+        </div>
+    </a>
+</li>

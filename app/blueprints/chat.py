@@ -6,13 +6,13 @@ from flask_socketio import emit, join_room, leave_room
 
 from app.extends import socketio
 from app.forms import RoomForm
-from app.models import User
+from app.models import Message
 
 chat_bp = Blueprint('chat', __name__)
 
 
-@chat_bp.route('/', methods=['GET', 'POST'])
-def index():
+@chat_bp.route('/select_room', methods=['GET', 'POST'])
+def select_room():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.login'))
     else:
@@ -34,13 +34,20 @@ def chat():
     name = current_user.username
     room = session.get('room', '')
     if name == '' or room == '':
-        return redirect(url_for('chat.index'))
+        return redirect(url_for('chat.home'))
     return render_template('chatroom.html', name=name, room=room)
 
 
 @chat_bp.route('/layout')
 def layout():
     return render_template('chat/client.html')
+
+
+@chat_bp.route('/')
+def home():
+    amount = current_app.config['MESSAGE_PER_PAGE']
+    messages = Message.query.order_by(Message.timestamp.asc())[-amount:]
+    return render_template('chat/home.html', messages=messages)
 
 
 @socketio.on('joined', namespace='/chat')

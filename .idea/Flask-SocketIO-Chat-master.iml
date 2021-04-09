@@ -18,7 +18,6 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/app/templates" />
-        <option value="C:/ProgramData/Miniconda3/envs/Flask-SocketIO-Chat-master/Lib/site-packages/flask_bootstrap/templates/bootstrap" />
       </list>
     </option>
   </component>

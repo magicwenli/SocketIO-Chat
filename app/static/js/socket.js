@@ -28,6 +28,6 @@ function leave_room() {
         socket.disconnect();
 
         // go back to the login page
-        window.location.href = Flask.url_for("chat.index");
+        window.location.href = Flask.url_for("chat.home");
     });
 }

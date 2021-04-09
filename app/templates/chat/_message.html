@@ -1,0 +1,16 @@
+<div class="message-box d-flex">
+    <div class="mr-lg-3 me-2">
+        <img class="avatar sm rounded" src="{{ message.author.gravatar }}"
+             data-href="{{ url_for('chat.get_profile', user_id=message.author.id) }}">
+    </div>
+
+    <div class="message-body">
+        <span class="timestamp text-muted">{{ moment(message.timestamp).format('lll') }}</span>
+        <div class="message-row d-flex align-items-center">
+
+            <div class="message-content p-3">
+                {{ message.body|safe }}
+            </div>
+        </div>
+    </div>
+</div>
