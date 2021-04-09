@@ -53,6 +53,6 @@ coverage.xml
 docs/_build/
 
 # env
-.env
+# .env
 
 

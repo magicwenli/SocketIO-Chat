@@ -1,7 +1,6 @@
 import os
 
 from dotenv import load_dotenv
-from gevent import monkey
 
 from app import create_app
 from app.extends import socketio
