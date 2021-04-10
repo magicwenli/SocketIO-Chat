@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     def generate_email_hash(self):
-        if self.email is not None and self.email_hash is not None:
+        if self.email is not None and self.email_hash is None:
             self.email_hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
     @property

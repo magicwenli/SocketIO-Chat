@@ -18,7 +18,7 @@ def login():
         email = form.email.data
         password = form.password.data
         remember = form.remember.data
-        user = User.query.filter(email == email).first()
+        user = User.query.filter_by(email = email).first()
         if user is not None:
             if user.verify_password(password):
                 login_user(user, remember)
@@ -46,9 +46,9 @@ def register():
         username = form.username.data
         password = form.password.data
         about = form.about.data
-        if User.query.filter(email == email).first():
+        if User.query.filter_by(email = email).first():
             flash('This email have been registered, please log in.')
-        elif User.query.filter(username == username).first():
+        elif User.query.filter_by(username = username).first():
             flash('Username have been taken, choose another one.')
         else:
             user = User(username=username, email=email, about=about)

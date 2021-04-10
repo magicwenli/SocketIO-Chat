@@ -5,18 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fe9e218-0f10-4521-87b3-e89fa541effa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/plan.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/chat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main/events.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main/forms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main/routes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/js/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/chat/_chatbody.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_chatbody.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/chat/_message.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_message.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/chat/_userlist.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/chat/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data-dev.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/chat/_sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_sidebar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/chat/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-dev.db" beforeDir="false" afterPath="$PROJECT_DIR$/data-dev.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/wsgi.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,11 +90,11 @@
       <recent name="C:\Users\Vita\Desktop\Flask-SocketIO-Chat-master\app\templates\chat" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vita\Desktop\Flask-SocketIO-Chat-master\app\templates\" />
       <recent name="C:\Users\Vita\Desktop\Flask-SocketIO-Chat-master\app\templates\chat" />
       <recent name="C:\Users\Vita\Desktop\Flask-SocketIO-Chat-master" />
       <recent name="C:\Users\Vita\Desktop\Flask-SocketIO-Chat-master\app\templates" />
       <recent name="C:\Users\Vita\Desktop\Flask-SocketIO-Chat-master\app\blueprints" />
-      <recent name="C:\Users\Vita\Desktop\Flask-SocketIO-Chat-master\app" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Flask-SocketIO-Chat-master">
@@ -210,6 +215,7 @@
       <workItem from="1618033121545" duration="85000" />
       <workItem from="1618033214304" duration="5183000" />
       <workItem from="1618040973716" duration="2991000" />
+      <workItem from="1618050957128" duration="3420000" />
     </task>
     <task id="LOCAL-00001" summary="add README.md &amp; generate requirements.txt">
       <created>1617817002795</created>
@@ -285,7 +291,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="client" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -304,6 +322,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask__wsgi_py_app_.coverage" NAME="Flask (wsgi.py:app) Coverage Results" MODIFIED="1617978263070" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask_SocketIO_Chat_master.coverage" NAME="Flask-SocketIO-Chat-master Coverage Results" MODIFIED="1618043925437" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask_SocketIO_Chat_master.coverage" NAME="Flask-SocketIO-Chat-master Coverage Results" MODIFIED="1618051341642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

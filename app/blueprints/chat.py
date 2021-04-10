@@ -53,28 +53,23 @@ def chat():
 def home():
     amount = current_app.config['MESSAGE_PER_PAGE']
     messages = Message.query.order_by(Message.timestamp.asc())[-amount:]
-    return render_template('chat/home.html', messages=messages)
+    return render_template('home.html', messages=messages)
 
-
-@socketio.on('connect')
-def connect():
-    global onlion_users
-    if current_user.is_authenticated and current_user.id not in onlion_users:
-        onlion_users.append(current_user.id)
-    emit('user count', {'count': len(onlion_users)}, broadcast=True)
-
-
-@socketio.on('disconnect')
-def disconnect():
-    global onlion_users
-    if current_user.is_authenticated and current_user.id in onlion_users:
-        onlion_users.remove(current_user.id)
-    emit('user count', {'count': len(onlion_users)}, broadcast=True)
-
-
-@socketio.on('hello')
-def hello():
-    emit('hi',{'msg': 'hi'})
+#
+# @socketio.on('connect')
+# def connect():
+#     global onlion_users
+#     if current_user.is_authenticated and current_user.id not in onlion_users:
+#         onlion_users.append(current_user.id)
+#     emit('user count', {'count': len(onlion_users)}, broadcast=True)
+#
+#
+# @socketio.on('disconnect')
+# def disconnect():
+#     global onlion_users
+#     if current_user.is_authenticated and current_user.id in onlion_users:
+#         onlion_users.remove(current_user.id)
+#     emit('user count', {'count': len(onlion_users)}, broadcast=True)
 
 
 @socketio.on('new message')
@@ -90,31 +85,3 @@ def new_message(message_body):
           'user_id': current_user.id},
          broadcast=True)
 
-
-@socketio.on('joined')
-def joined(message):
-    """Sent by clients when they enter a room.
-    A status message is broadcast to all people in the room."""
-    room = 'chat'
-    print(room)
-    join_room(room)
-    emit('status', {'msg': 'jack' + ' has entered the room.'}, room=room)
-
-
-@socketio.on('text')
-def text(message):
-    """Sent by a client when the user entered a new message.
-    The message is sent to all people in the room."""
-    room = 'chat'
-    emit('message',
-         {'msg': '[' + datetime.now().strftime('%m-%d %H:%M') + '] ' + 'jack' + ' : ' + message['msg']},
-         room=room)
-
-
-@socketio.on('left')
-def left(message):
-    """Sent by clients when they leave a room.
-    A status message is broadcast to all people in the room."""
-    room = 'chat'
-    leave_room(room)
-    emit('status', {'msg': 'jack' + ' has left the room.'}, room=room)

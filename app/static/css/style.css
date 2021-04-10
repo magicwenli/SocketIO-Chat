@@ -181,3 +181,21 @@ li {
     resize: none;
     border-radius: 4px;
 }
+
+.message-body {
+    width: 50%;
+}
+
+.message-content {
+    text-align: left;
+}
+
+.timestamp {
+    float: right;
+}
+
+.avatar {
+    width: 49px;
+    height: 49px;
+}
+
