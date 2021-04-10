@@ -3,7 +3,7 @@
     SocketIO Chat
 {% endblock %}
 {% block main %}
-    <div id="layout">
+    <div id="layout popOutBg">
         <div class="sidebar py-xl-4 py-3 px-xl-4 px-3">
             {% include 'chat/_sidebar.html' %}
         </div>
@@ -11,6 +11,7 @@
             {% include 'chat/_chatbody.html' %}
         </div>
     </div>
+    {% include "chat/_join_room.html" %}
 {% endblock %}
 {% block scripts %}
     {{ super() }}

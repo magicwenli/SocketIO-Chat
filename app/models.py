@@ -42,3 +42,22 @@ class Message(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow(), index=True)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User', back_populates='messages')
+
+
+class Room():
+    users = []
+    room_name="chat"
+
+    def __init__(self, room_name):
+        self.room_name = room_name
+
+    def add_user(self, user):
+        if user not in self.users:
+            self.users.append(user)
+
+    def remove_user(self, user):
+        if user in self.users:
+            self.users.remove(user)
+
+    def __repr__(self):
+        return self.room_name

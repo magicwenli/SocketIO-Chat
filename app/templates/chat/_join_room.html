@@ -1,0 +1,18 @@
+{% from 'bootstrap/form.html' import render_form %}
+
+<div class="popOut ani" style="display: none;">
+    <span title="close" id="close-pop"> [x] </span>
+        <div class="row h-100 justify-content-center align-items-center">
+            {{ render_form(form,method="post") }}
+        </div>
+</div>
+
+
+{#    <div class="container h-100">#}
+{#        <div class="row h-100 page-header justify-content-center align-items-center">#}
+{#            <h1>Enter the Group Name you want to join.</h1>#}
+{#        </div>#}
+{#        <div class="row h-100 justify-content-center align-items-center">#}
+{#            {{ render_form(form,method="post") }}#}
+{#        </div>#}
+{#    </div>#}
