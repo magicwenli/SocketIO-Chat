@@ -30,7 +30,10 @@ $(document).ready(function () {
     });
 
     socket.on('users info',function (data){
-        $('#onlion-user').text(data.count);
+        $('#online-user').text(data.count);
         $('#user-list').html(data.users);
-    })
+    });
+
+    // socket.on('join room')
+    // TODO    https://socket.io/docs/v3/rooms/  Join Room
 });

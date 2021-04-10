@@ -3,11 +3,11 @@
 Users
 </a>
 <a class="nav-link" data-toggle="pill" href="#sidebar-room" role="tab">Rooms</a>
-<a class="nav-link" data-toggle="pill" href="#" role="tab">New Room</a>
+<a class="btn btn-outline-primary" id="new-room" href="#">New Room</a>
 </div>
 <div class="tab-content" id="sidebar-content">
     <div class="tab-pane show active" id="sidebar-user" role="tabpanel" aria-labelledby="user-tab">
-        <h4 class="h5 my-2">Onlion Users: <span id="onlion-user">{{ user_amount }}</span></h4>
+        <h4 class="h5 my-2">Online Users: <span id="online-user">{{ user_amount }}</span></h4>
         <ul class="chat-list mb-4" id="user-list">
 
         </ul>
@@ -15,7 +15,7 @@ Users
 {#    <div class="tab-pane" id="sidebar-room" role="tabpanel" aria-labelledby="room-tab">#}
 {#        <ul class="chat-list mb-4">#}
 {#            <li class="justify-content-between">#}
-{#                <h4 class="h5 my-2">Onlion Room: <span id="onlion-user">{{ room_amount }}</span></h4>#}
+{#                <h4 class="h5 my-2">Online Room: <span id="online-user">{{ room_amount }}</span></h4>#}
 {#            </li>#}
 {#            {% include "chat/_rooms.html" %}#}
 {#        </ul>#}

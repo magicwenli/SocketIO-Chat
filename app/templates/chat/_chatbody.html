@@ -28,7 +28,7 @@
         {% include 'chat/_messages.html' %}
     </div>
 
-    <div class="chat-footer border-top py-xl-4 py-lg-2 py-2">
+    <div class="chat-footer border-top py-xl-4 py-2">
         <div class="container-xxl">
             {% if current_user.is_authenticated %}
                 <div class="row col-12 align-items-start">
@@ -39,12 +39,12 @@
                 </button>
                 </span>
                 </div>
-                <div class="row col-12 align-items-start">
+                <div class="row col-12 align-items-start mt-2">
                 <textarea class="form-control" placeholder="Type your message..." id="message-textarea"
                           rows="3"></textarea>
                 </div>
             {% else %}
-                <div class="ui floating message">Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
+                <div class="ui floating message mt-2">Please <a href="{{ url_for('auth.login') }}">Sign in</a> or
                     <a href="{{ url_for('auth.register') }}">Sign up</a> to send message.
                 </div>
             {% endif %}

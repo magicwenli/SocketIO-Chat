@@ -4,10 +4,11 @@ from flask_socketio import emit
 
 from app.extends import socketio, db
 from app.forms import RoomForm
-from app.models import Message
+from app.models import Message,Room
 
 chat_bp = Blueprint('chat', __name__)
-onlion_users = []
+online_users = []
+online_rooms=[]
 
 
 @chat_bp.route('/select_room', methods=['GET', 'POST'])
@@ -22,7 +23,7 @@ def select_room():
             return redirect(url_for('.chat'))
         elif request.method == 'GET':
             form.room.data = session.get('room', '')
-        return render_template('select_room.html', form=form)
+        return render_template('chat/_join_room.html', form=form)
 
 
 @chat_bp.route('/chat', methods=['GET'])
@@ -49,25 +50,35 @@ def chat():
 
 @chat_bp.route('/')
 def home():
+    global online_rooms
+
+    form=RoomForm()
     amount = current_app.config['MESSAGE_PER_PAGE']
     messages = Message.query.order_by(Message.timestamp.asc())[-amount:]
-    return render_template('home.html', messages=messages)
+
+    if form.validate_on_submit():
+        room_name = form.room.data
+        if room_name not in online_rooms:
+            online_rooms.append(Room(room_name))
+            emit('join')
+
+    return render_template('home.html', messages=messages,form=form)
 
 
 @socketio.on('connect')
 def connect():
-    global onlion_users
-    if current_user.is_authenticated and current_user not in onlion_users:
-        onlion_users.append(current_user)
-    emit('users info', {'count': len(onlion_users), 'users': render_template('chat/_users.html', users=onlion_users)}, broadcast=True)
+    global online_users
+    if current_user.is_authenticated and current_user not in online_users:
+        online_users.append(current_user)
+    emit('users info', {'count': len(online_users), 'users': render_template('chat/_users.html', users=online_users)}, broadcast=True)
 
 
 @socketio.on('disconnect')
 def disconnect():
-    global onlion_users
-    if current_user.is_authenticated and current_user in onlion_users:
-        onlion_users.remove(current_user)
-    emit('users info', {'count': len(onlion_users), 'users': render_template('chat/_users.html', users=onlion_users)}, broadcast=True)
+    global online_users
+    if current_user.is_authenticated and current_user in online_users:
+        online_users.remove(current_user)
+    emit('users info', {'count': len(online_users), 'users': render_template('chat/_users.html', users=online_users)}, broadcast=True)
 
 
 @socketio.on('new message')
