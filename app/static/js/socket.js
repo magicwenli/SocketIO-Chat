@@ -19,6 +19,7 @@ $(document).ready(function () {
             $textarea.val('');
         }
     }
+    scrollToBottom();
 
     $('#message-textarea').on('keydown', new_message.bind(this));
 
@@ -27,4 +28,9 @@ $(document).ready(function () {
         flask_moment_render_all();
         scrollToBottom()
     });
+
+    socket.on('users info',function (data){
+        $('#onlion-user').text(data.count);
+        $('#user-list').html(data.users);
+    })
 });

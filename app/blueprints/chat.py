@@ -1,8 +1,6 @@
-from datetime import datetime
-
 from flask import Blueprint, session, redirect, url_for, render_template, request, current_app
 from flask_login import current_user
-from flask_socketio import emit, join_room, leave_room
+from flask_socketio import emit
 
 from app.extends import socketio, db
 from app.forms import RoomForm
@@ -55,21 +53,21 @@ def home():
     messages = Message.query.order_by(Message.timestamp.asc())[-amount:]
     return render_template('home.html', messages=messages)
 
-#
-# @socketio.on('connect')
-# def connect():
-#     global onlion_users
-#     if current_user.is_authenticated and current_user.id not in onlion_users:
-#         onlion_users.append(current_user.id)
-#     emit('user count', {'count': len(onlion_users)}, broadcast=True)
-#
-#
-# @socketio.on('disconnect')
-# def disconnect():
-#     global onlion_users
-#     if current_user.is_authenticated and current_user.id in onlion_users:
-#         onlion_users.remove(current_user.id)
-#     emit('user count', {'count': len(onlion_users)}, broadcast=True)
+
+@socketio.on('connect')
+def connect():
+    global onlion_users
+    if current_user.is_authenticated and current_user not in onlion_users:
+        onlion_users.append(current_user)
+    emit('users info', {'count': len(onlion_users), 'users': render_template('chat/_users.html', users=onlion_users)}, broadcast=True)
+
+
+@socketio.on('disconnect')
+def disconnect():
+    global onlion_users
+    if current_user.is_authenticated and current_user in onlion_users:
+        onlion_users.remove(current_user)
+    emit('users info', {'count': len(onlion_users), 'users': render_template('chat/_users.html', users=onlion_users)}, broadcast=True)
 
 
 @socketio.on('new message')

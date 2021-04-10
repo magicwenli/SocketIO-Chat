@@ -7,11 +7,9 @@ Users
 </div>
 <div class="tab-content" id="sidebar-content">
     <div class="tab-pane show active" id="sidebar-user" role="tabpanel" aria-labelledby="user-tab">
-        <ul class="chat-list mb-4">
-            <li class="Justify-content-between">
-                <h4 class="h5 my-2">Onlion User: <span id="onlion-user">{{ user_amount }}</span></h4>
-            </li>
-            {% include "chat/_users.html" %}
+        <h4 class="h5 my-2">Onlion Users: <span id="onlion-user">{{ user_amount }}</span></h4>
+        <ul class="chat-list mb-4" id="user-list">
+
         </ul>
     </div>
 {#    <div class="tab-pane" id="sidebar-room" role="tabpanel" aria-labelledby="room-tab">#}
