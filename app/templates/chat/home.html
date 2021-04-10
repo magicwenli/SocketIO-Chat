@@ -5,7 +5,7 @@
 {% block main %}
     <div id="layout">
         <div class="sidebar py-xl-4 py-3 px-xl-4 px-3">
-            {% include 'chat/_userlist.html' %}
+            {% include 'chat/_sidebar.html' %}
         </div>
         <div class="main px-xl-5 px-lg-4 px-3">
             {% include 'chat/_chatbody.html' %}
@@ -16,5 +16,6 @@
     {{ super() }}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static',filename='js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/socket.js') }}"></script>
 {% endblock %}
 {%  block footer_ %}{% endblock %}

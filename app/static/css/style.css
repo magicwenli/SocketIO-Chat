@@ -163,6 +163,7 @@ ol, ul, dl {
 li {
     display: list-item;
     text-align: -webkit-match-parent;
+
 }
 
 .chat-list li {
