@@ -4,15 +4,16 @@ from flask import Blueprint, session, redirect, url_for, render_template, reques
 from flask_login import current_user
 from flask_socketio import emit, join_room, leave_room
 
-from app.extends import socketio
+from app.extends import socketio, db
 from app.forms import RoomForm
-from app.models import User
+from app.models import Message
 
 chat_bp = Blueprint('chat', __name__)
+onlion_users = []
 
 
-@chat_bp.route('/', methods=['GET', 'POST'])
-def index():
+@chat_bp.route('/select_room', methods=['GET', 'POST'])
+def select_room():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.login'))
     else:
@@ -26,46 +27,61 @@ def index():
         return render_template('select_room.html', form=form)
 
 
-@chat_bp.route('/chat')
+@chat_bp.route('/chat', methods=['GET'])
 def chat():
-    # TODO 第一次登陆后不能直接进入聊天室，需要刷新一次
-    """Chat room. The user's name and room must be stored in
-    the session."""
-    name = current_user.username
-    room = session.get('room', '')
-    if name == '' or room == '':
-        return redirect(url_for('chat.index'))
-    return render_template('chatroom.html', name=name, room=room)
+    if request.method != 'GET':
+        pass
+    else:
+        chat_type = request.args.get('type', 'room')  # room or user
+        room_name = request.args.get('rname', 'chat')
+        user_id = request.args.get('uid')
+        if chat_type == 'room':
+            if room_name is not None:
+                # action for room
+                pass
+            else:
+                pass
+        else:
+            if user_id is not None:
+                # action for user
+                pass
+            else:
+                pass
 
 
-@chat_bp.route('/layout')
-def layout():
-    return render_template('chat/client.html')
+@chat_bp.route('/')
+def home():
+    amount = current_app.config['MESSAGE_PER_PAGE']
+    messages = Message.query.order_by(Message.timestamp.asc())[-amount:]
+    return render_template('home.html', messages=messages)
+
+#
+# @socketio.on('connect')
+# def connect():
+#     global onlion_users
+#     if current_user.is_authenticated and current_user.id not in onlion_users:
+#         onlion_users.append(current_user.id)
+#     emit('user count', {'count': len(onlion_users)}, broadcast=True)
+#
+#
+# @socketio.on('disconnect')
+# def disconnect():
+#     global onlion_users
+#     if current_user.is_authenticated and current_user.id in onlion_users:
+#         onlion_users.remove(current_user.id)
+#     emit('user count', {'count': len(onlion_users)}, broadcast=True)
 
 
-@socketio.on('joined', namespace='/chat')
-def joined(message):
-    """Sent by clients when they enter a room.
-    A status message is broadcast to all people in the room."""
-    room = session.get('room')
-    join_room(room)
-    emit('status', {'msg': session.get('name') + ' has entered the room.'}, room=room)
+@socketio.on('new message')
+def new_message(message_body):
+    message = Message(author=current_user._get_current_object(), body=message_body)
+    db.session.add(message)
+    db.session.commit()
+    emit('new message',
+         {'message_html': render_template('chat/_message.html', message=message),
+          'message_body': message_body,
+          'gravatar': current_user.gravatar,
+          'username': current_user.username,
+          'user_id': current_user.id},
+         broadcast=True)
 
-
-@socketio.on('text', namespace='/chat')
-def text(message):
-    """Sent by a client when the user entered a new message.
-    The message is sent to all people in the room."""
-    room = session.get('room')
-    emit('message',
-         {'msg': '[' + datetime.now().strftime('%m-%d %H:%M') + '] ' + session.get('name') + ' : ' + message['msg']},
-         room=room)
-
-
-@socketio.on('left', namespace='/chat')
-def left(message):
-    """Sent by clients when they leave a room.
-    A status message is broadcast to all people in the room."""
-    room = session.get('room')
-    leave_room(room)
-    emit('status', {'msg': session.get('name') + ' has left the room.'}, room=room)

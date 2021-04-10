@@ -22,7 +22,7 @@ class BaseConfig(object):
     CKEDITOR_ENABLE_CSRF = True
 
     FRIENDS_PER_PAGE = 10
-
+    MESSAGE_PER_PAGE=20
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.db')

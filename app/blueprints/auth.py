@@ -12,26 +12,18 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('chat.index'))
+        return redirect(url_for('chat.home'))
     form = LoginForm()
     if form.validate_on_submit():
-        username = form.username.data
+        email = form.email.data
         password = form.password.data
         remember = form.remember.data
-        users = User.query.all()
-        user = User.query.first()
-        has_user = False
-        for user in users:
-            if username == user.username:
-                has_user = True
-                break
-        if has_user and user.validate_password(password):
-            login_user(user, remember)
-            flash('Welcome back.', 'info')
-            return redirect(url_for('chat.index'))
-        else:
-            flash('Invalid username or password.', 'warning')
-
+        user = User.query.filter_by(email = email).first()
+        if user is not None:
+            if user.verify_password(password):
+                login_user(user, remember)
+                return redirect(url_for('chat.home'))
+        flash('Invalid username or password.', 'warning')
     return render_template('auth/login.html', form=form)
 
 
@@ -45,18 +37,26 @@ def logout():
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('chat.home'))
+
     form = RegisterForm()
     if form.validate_on_submit():
+        email = form.email.data.lower()
         username = form.username.data
         password = form.password.data
         about = form.about.data
-        if User.query.filter(User.username == username).first():
+        if User.query.filter_by(email = email).first():
+            flash('This email have been registered, please log in.')
+        elif User.query.filter_by(username = username).first():
             flash('Username have been taken, choose another one.')
         else:
-            user = User(username=username, about=about)
+            user = User(username=username, email=email, about=about)
             user.set_password(password)
+            user.generate_email_hash()
             db.session.add(user)
             db.session.commit()
             flash('User Created.', 'success')
-            return redirect(url_for('chat.index'))
+            login_user(user, remember=True)
+            return redirect(url_for('chat.home'))
     return render_template('auth/register.html', form=form)

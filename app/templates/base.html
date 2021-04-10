@@ -17,7 +17,7 @@
 <nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('chat.index') }}">Socket IO Chat</a>
+            <a class="navbar-brand" href="{{ url_for('chat.home') }}">Socket IO Chat</a>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
                     <a class="nav-link" href="{{ url_for('auth.logout', next=request.full_path) }}">Logout</a>
@@ -49,6 +49,7 @@
 {% endblock %}
 {% block scripts %}
     {{ bootstrap.load_js() }}
+    {{ moment.include_moment() }}
 {% endblock %}
 </body>
 </html>
