@@ -38,7 +38,7 @@ class User(db.Model, UserMixin):
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     in_room = db.Column(db.Boolean, default=1)
-    room_name = db.Column(db.String(30), unique=True)
+    room_name = db.Column(db.String(30))
     body = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow(), index=True)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
