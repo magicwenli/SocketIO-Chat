@@ -15,7 +15,7 @@ def login():
         return redirect(url_for('chat.home'))
     form = LoginForm()
     if form.validate_on_submit():
-        email = form.email.data
+        email = form.email.data.lower()
         password = form.password.data
         remember = form.remember.data
         user = User.query.filter_by(email = email).first()

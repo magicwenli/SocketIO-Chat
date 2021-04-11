@@ -12,10 +12,11 @@ $(document).ready(function () {
 
     function new_message(e) {
         var $textarea = $('#message-textarea');
-        var message_body = $textarea.val().trim();
-        if (e.which === ENTER_KEY && !e.shiftKey && message_body) {
+        var room_name=$('#chat-title').text();
+        var msg = {body:$textarea.val().trim(),room_name:room_name};
+        if (e.which === ENTER_KEY && !e.shiftKey && msg) {
             e.preventDefault();
-            socket.emit('new message', message_body);
+            socket.emit('new message', msg);
             $textarea.val('');
         }
     }
@@ -33,6 +34,32 @@ $(document).ready(function () {
         $('#online-user').text(data.count);
         $('#user-list').html(data.users);
     });
+
+    socket.on('joined_room',function (data){
+        $(".popOut").css("display", "none");
+        $('#chat-title').text(data.room_name)
+        $('.chat-content').html('')
+        var msg_url='/chatroom/'+data.room_name
+        $.ajax({
+            type: 'GET',
+            url: msg_url,
+            success:function (message){
+                $('.chat-content').html(message)
+            },
+            error: function (error){
+                $('.chat-content').html('Can not get message from server')
+            }
+        });
+    })
+
+    function join_room(e) {
+        var room_name = $('#room').val();
+        socket.emit('join room',room_name);
+    }
+
+    $('#submit').on('click',join_room.bind(this));
+
+
 
     // socket.on('join room')
     // TODO    https://socket.io/docs/v3/rooms/  Join Room

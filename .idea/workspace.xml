@@ -5,18 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fe9e218-0f10-4521-87b3-e89fa541effa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/templates/chat/_join_room.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/chat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/js/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/socket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/chat/_chatbody.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_chatbody.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/chat/_sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/select_room.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/chat/_join_room.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_join_room.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-dev.db" beforeDir="false" afterPath="$PROJECT_DIR$/data-dev.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +213,9 @@
       <workItem from="1618033121545" duration="85000" />
       <workItem from="1618033214304" duration="5183000" />
       <workItem from="1618040973716" duration="2991000" />
-      <workItem from="1618050957128" duration="11859000" />
+      <workItem from="1618050957128" duration="12889000" />
+      <workItem from="1618151791682" duration="811000" />
+      <workItem from="1618152750969" duration="9579000" />
     </task>
     <task id="LOCAL-00001" summary="add README.md &amp; generate requirements.txt">
       <created>1617817002795</created>
@@ -302,7 +301,21 @@
       <option name="project" value="LOCAL" />
       <updated>1618059862245</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="improve">
+      <created>1618066854217</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1618066854217</updated>
+    </task>
+    <task id="LOCAL-00014" summary="update README.md">
+      <created>1618067141411</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1618067141411</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -343,10 +356,12 @@
     <MESSAGE value="talk in room ‘chat’" />
     <MESSAGE value="update requirements.txt" />
     <MESSAGE value="add Onlion Users list" />
-    <option name="LAST_COMMIT_MESSAGE" value="add Onlion Users list" />
+    <MESSAGE value="improve" />
+    <MESSAGE value="update README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="update README.md" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask_SocketIO_Chat_master.coverage" NAME="Flask-SocketIO-Chat-master Coverage Results" MODIFIED="1618159531189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask__wsgi_py_app_.coverage" NAME="Flask (wsgi.py:app) Coverage Results" MODIFIED="1617978263070" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask_SocketIO_Chat_master.coverage" NAME="Flask-SocketIO-Chat-master Coverage Results" MODIFIED="1618058936791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

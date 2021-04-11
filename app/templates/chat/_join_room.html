@@ -1,10 +1,13 @@
-{% from 'bootstrap/form.html' import render_form %}
-
 <div class="popOut ani" style="display: none;">
     <span title="close" id="close-pop"> [x] </span>
-        <div class="row h-100 justify-content-center align-items-center">
-            {{ render_form(form,method="post") }}
+    <div class="row h-100 justify-content-center align-items-center">
+
+        <div class="form-group required"><label class="form-control-label" for="room">Room:</label>
+            <input class="form-control" id="room" name="room" required="" type="text" value="">
         </div>
+        <input class="btn btn-primary btn-md ml-3" id="submit" name="submit" type="submit" value="Enter Chatroom">
+
+    </div>
 </div>
 
 

@@ -6,6 +6,7 @@ from flask import Flask
 from app.blueprints.auth import auth_bp
 from app.blueprints.chat import chat_bp
 from app.extends import db, moment, ckediter, socketio, login_manager, bootstrap, jsglue
+from app.models import User
 from app.settings import config
 
 
@@ -47,5 +48,12 @@ def reg_commands(app):
             click.confirm('This operation will delete the database, do you want to continue?', abort=True)
             db.drop_all()
             click.echo('Drop tables.')
+
         db.create_all()
+
+        user = User(username='magicwenli', email='yxra3603@outlook.com', about='123')
+        user.set_password('123456')
+        user.generate_email_hash()
+        db.session.add(user)
+        db.session.commit()
         click.echo('Initialized database.')

@@ -37,7 +37,8 @@ class User(db.Model, UserMixin):
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    in_group = db.Column(db.Boolean, default=1)
+    in_room = db.Column(db.Boolean, default=1)
+    room_name = db.Column(db.String(30), unique=True)
     body = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow(), index=True)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -46,10 +47,10 @@ class Message(db.Model):
 
 class Room():
     users = []
-    room_name="chat"
+    name="chat"
 
-    def __init__(self, room_name):
-        self.room_name = room_name
+    def __init__(self, name):
+        self.name = name
 
     def add_user(self, user):
         if user not in self.users:
