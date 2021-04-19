@@ -32,7 +32,7 @@ class User(db.Model, UserMixin):
 
     @property
     def gravatar(self):
-        return 'https://gravatar.com/avatar/%s?d=monsterid' % self.email_hash
+        return 'https://gravatar.loli.net/avatar/%s?d=monsterid' % self.email_hash
 
 
 class Message(db.Model):
