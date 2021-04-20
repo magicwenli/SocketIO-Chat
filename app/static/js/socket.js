@@ -4,6 +4,8 @@ $(document).ready(function () {
     socket = io();
 
     var ENTER_KEY = 13;
+    var $textarea = $('#message-textarea');
+    var $emitbtn = $('#emitbtn');
 
     function scrollToBottom() {
         var chat_content = $('.chat-content');
@@ -11,18 +13,19 @@ $(document).ready(function () {
     }
 
     function new_message(e) {
-        var $textarea = $('#message-textarea');
-        var room_name=$('#chat-title').text();
-        var msg = {body:$textarea.val().trim(),room_name:room_name};
-        if (e.which === ENTER_KEY && !e.shiftKey && msg) {
+        var room_name = $('#chat-title').text();
+        var msg = {body: $textarea.val().trim(), room_name: room_name};
+        if ((e.which === ENTER_KEY && !e.shiftKey) || (e.which === 1) && msg) {
             e.preventDefault();
             socket.emit('new message', msg);
             $textarea.val('');
         }
     }
+
     scrollToBottom();
 
-    $('#message-textarea').on('keydown', new_message.bind(this));
+    $textarea.on('keydown', new_message.bind(this));
+    $emitbtn.on('click', new_message.bind(this));
 
     socket.on('new message', function (data) {
         $('.chat-content').append(data.message_html);
@@ -30,23 +33,24 @@ $(document).ready(function () {
         scrollToBottom()
     });
 
-    socket.on('users info',function (data){
+    // get and set userinfo html at sidebar
+    socket.on('users info', function (data) {
         $('#online-user').text(data.count);
         $('#user-list').html(data.users);
     });
 
-    socket.on('joined_room',function (data){
+    socket.on('joined_room', function (data) {
         $(".popOut").css("display", "none");
         $('#chat-title').text(data.room_name)
         $('.chat-content').html('')
-        var msg_url='/chatroom/'+data.room_name
+        var msg_url = '/chatroom/' + data.room_name
         $.ajax({
             type: 'GET',
             url: msg_url,
-            success:function (message){
+            success: function (message) {
                 $('.chat-content').html(message)
             },
-            error: function (error){
+            error: function (error) {
                 $('.chat-content').html('Can not get message from server')
             }
         });
@@ -54,13 +58,13 @@ $(document).ready(function () {
 
     function join_room(e) {
         var room_name = $('#room').val();
-        socket.emit('join room',room_name);
+        socket.emit('join room', room_name);
     }
 
-    $('#submit').on('click',join_room.bind(this));
-
+    $('#submit').on('click', join_room.bind(this));
 
 
     // socket.on('join room')
     // TODO    https://socket.io/docs/v3/rooms/  Join Room
+    // TODO    webrtc https://github.com/pfertyk/webrtc-working-example/blob/72cf0bc456/web/main.js
 });

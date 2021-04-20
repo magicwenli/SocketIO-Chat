@@ -1,50 +1,51 @@
-from flask import Blueprint, session, redirect, url_for, render_template, request, current_app
+from flask import Blueprint, redirect, render_template, current_app
 from flask_login import current_user
-from flask_socketio import emit, join_room, leave_room
+from flask_socketio import emit, join_room
 
 from app.extends import socketio, db
 from app.forms import RoomForm
-from app.models import Message, Room
+from app.models import Message
 
 chat_bp = Blueprint('chat', __name__)
 online_users = []
 
 
-@chat_bp.route('/select_room', methods=['GET', 'POST'])
-def select_room():
-    if not current_user.is_authenticated:
-        return redirect(url_for('auth.login'))
-    else:
-        form = RoomForm()
-        if form.validate_on_submit():
-            session['name'] = current_user.username
-            session['room'] = form.room.data
-            return redirect(url_for('.chat'))
-        elif request.method == 'GET':
-            form.room.data = session.get('room', '')
-        return render_template('chat/_join_room.html', form=form)
-
-
-@chat_bp.route('/chat', methods=['POST'])
-def chat():
-    if request.method != 'GET':
-        pass
-    else:
-        chat_type = request.args.get('type', 'room')  # room or user
-        room_name = request.args.get('rname', 'chat')
-        user_id = request.args.get('uid')
-        if chat_type == 'room':
-            if room_name is not None:
-                # action for room
-                pass
-            else:
-                pass
-        else:
-            if user_id is not None:
-                # action for user
-                pass
-            else:
-                pass
+# 弃用
+# @chat_bp.route('/select_room', methods=['GET', 'POST'])
+# def select_room():
+#     if not current_user.is_authenticated:
+#         return redirect(url_for('auth.login'))
+#     else:
+#         form = RoomForm()
+#         if form.validate_on_submit():
+#             session['name'] = current_user.username
+#             session['room'] = form.room.data
+#             return redirect(url_for('.chat'))
+#         elif request.method == 'GET':
+#             form.room.data = session.get('room', '')
+#         return render_template('chat/_join_room.html', form=form)
+#
+#
+# @chat_bp.route('/chat', methods=['POST'])
+# def chat():
+#     if request.method != 'GET':
+#         pass
+#     else:
+#         chat_type = request.args.get('type', 'room')  # room or user
+#         room_name = request.args.get('rname', 'chat')
+#         user_id = request.args.get('uid')
+#         if chat_type == 'room':
+#             if room_name is not None:
+#                 # action for room
+#                 pass
+#             else:
+#                 pass
+#         else:
+#             if user_id is not None:
+#                 # action for user
+#                 pass
+#             else:
+#                 pass
 
 
 @chat_bp.route('/')
@@ -58,11 +59,18 @@ def home():
     return render_template('home.html', messages=messages, form=form)
 
 
-@chat_bp.route('/chatroom/<room_name>',methods=['GET'])
+# AJAX message interface
+@chat_bp.route('/chatroom/<room_name>', methods=['GET'])
 def room_message(room_name):
     amount = current_app.config['MESSAGE_PER_PAGE']
     messages = Message.query.filter_by(in_room=1, room_name=room_name).order_by(Message.timestamp.asc())[-amount:]
     return render_template('chat/_messages.html', messages=messages)
+
+
+# experimental p2p chat
+@chat_bp.route('/p/<uuid>')
+def chat_url(uuid):
+    return redirect('http://127.0.0.1/p/' + uuid)
 
 
 @socketio.on('connect')

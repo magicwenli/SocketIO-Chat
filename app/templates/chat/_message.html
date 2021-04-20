@@ -18,7 +18,7 @@
     <div class="message-box d-flex my-2 align-items-center justify-content-start">
         <div class="mr-lg-3 me-2">
             <img class="avatar sm rounded shadow-sm" src="{{ message.author.gravatar }}"
-                 data-href="#">
+                 data-href="{{ chat_url(message.author) }}">
         </div>
         <div class="message-body mx-3">
             <span class="h6">{{ message.author.username }}</span>

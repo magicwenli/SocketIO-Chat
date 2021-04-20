@@ -1,7 +1,8 @@
 import os
+import uuid
 
 import click
-from flask import Flask
+from flask import Flask, url_for
 
 from app.blueprints.auth import auth_bp
 from app.blueprints.chat import chat_bp
@@ -20,7 +21,7 @@ def create_app(config_name=None):
     reg_blueprints(app)
     reg_extensions(app)
     reg_commands(app)
-
+    reg_jinja2(app)
     return app
 
 
@@ -57,3 +58,12 @@ def reg_commands(app):
         db.session.add(user)
         db.session.commit()
         click.echo('Initialized database.')
+
+
+def reg_jinja2(app):
+    @app.context_processor
+    def utility_processor():
+        def chat_url(user):
+            return url_for('chat.chat_url', uuid=uuid.uuid3(uuid.NAMESPACE_DNS, user.username))
+
+        return dict(chat_url=chat_url)
