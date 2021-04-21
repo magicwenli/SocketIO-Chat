@@ -61,4 +61,4 @@ class Room():
             self.users.remove(user)
 
     def __repr__(self):
-        return self.room_name
+        return self.name

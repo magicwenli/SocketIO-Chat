@@ -7,6 +7,7 @@ $(document).ready(function () {
     var $textarea = $('#message-textarea');
     var $emitbtn = $('#emitbtn');
 
+
     function scrollToBottom() {
         var chat_content = $('.chat-content');
         chat_content.scrollTop(chat_content[0].scrollHeight);
@@ -27,6 +28,7 @@ $(document).ready(function () {
     $textarea.on('keydown', new_message.bind(this));
     $emitbtn.on('click', new_message.bind(this));
 
+
     socket.on('new message', function (data) {
         $('.chat-content').append(data.message_html);
         flask_moment_render_all();
@@ -35,15 +37,23 @@ $(document).ready(function () {
 
     // get and set userinfo html at sidebar
     socket.on('users info', function (data) {
-        $('#online-user').text(data.count);
-        $('#user-list').html(data.users);
+        $('#users-amount').text(data.amount);
+        $('#users-list').html(data.users);
+        $('#rooms-amount').text(data.rooms_amount);
+        $('#rooms-list').html(data.rooms);
+
     });
 
     socket.on('joined_room', function (data) {
         $(".popOut").css("display", "none");
         $('#chat-title').text(data.room_name)
+        enter_room(data.room_name);
+    })
+
+    function enter_room(room_name) {
         $('.chat-content').html('')
-        var msg_url = '/chatroom/' + data.room_name
+        var msg_url = '/chatroom/' + room_name
+
         $.ajax({
             type: 'GET',
             url: msg_url,
@@ -54,7 +64,7 @@ $(document).ready(function () {
                 $('.chat-content').html('Can not get message from server')
             }
         });
-    })
+    }
 
     function join_room(e) {
         var room_name = $('#room').val();

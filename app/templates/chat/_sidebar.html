@@ -1,23 +1,25 @@
 <div class="nav nav-pills" role="tablist">
-    <a class="nav-link active" data-toggle="pill" href="#sidebar-user" role="tab">
+    <a class="nav-link active" id="all-tab" data-toggle="pill" aria-controls="sidebar-user" href="#sidebar-user"
+       role="tab">
         Users
     </a>
-    <a class="nav-link" data-toggle="pill" href="#sidebar-room" role="tab">Rooms</a>
-    <a class="btn btn-outline-primary" id="new-room" href="#">New Room</a>
+    <a class="nav-link" id="this-tab" data-toggle="pill" aria-controls="sidebar-room" href="#sidebar-room" role="tab">Rooms</a>
+    <a class="btn btn-outline-primary ml-4" id="new-room" href="#">New Room</a>
 </div>
 <div class="tab-content" id="sidebar-content">
-    <div class="tab-pane show active" id="sidebar-user" role="tabpanel" aria-labelledby="user-tab">
-        <h4 class="h5 my-2">Online Users: <span id="online-user"></span></h4>
-        <ul class="chat-list mb-4" id="user-list">
+    <div class="tab-pane show active" id="sidebar-user" role="tabpanel" aria-labelledby="all-tab">
+        <h4 class="h5 my-2">Users of All: <span id="users-amount"></span></h4>
+        <ul class="chat-list mb-4" id="users-list">
 
         </ul>
     </div>
-{#    <div class="tab-pane" id="sidebar-room" role="tabpanel" aria-labelledby="room-tab">#}
-{#        <ul class="chat-list mb-4">#}
-{#            <li class="justify-content-between">#}
-{#                <h4 class="h5 my-2">Online Room: <span id="online-user">{{ room_amount }}</span></h4>#}
-{#            </li>#}
-{#            {% include "chat/_rooms.html" %}#}
-{#        </ul>#}
-{#    </div>#}
+    <div class="tab-pane" id="sidebar-room" role="tabpanel" aria-labelledby="this-tab">
+        <h4 class="h5 my-2">Now I am in: <span id="rooms-amount"></span></h4>
+        <ul class="chat-list mb-4" id="rooms-list">
+
+        </ul>
+
+    </div>
 </div>
+
+

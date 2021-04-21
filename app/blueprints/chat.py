@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, current_app
 from flask_login import current_user
-from flask_socketio import emit, join_room
+from flask_socketio import emit, join_room, rooms, leave_room
 
 from app.extends import socketio, db
 from app.forms import RoomForm
@@ -8,44 +8,6 @@ from app.models import Message
 
 chat_bp = Blueprint('chat', __name__)
 online_users = []
-
-
-# 弃用
-# @chat_bp.route('/select_room', methods=['GET', 'POST'])
-# def select_room():
-#     if not current_user.is_authenticated:
-#         return redirect(url_for('auth.login'))
-#     else:
-#         form = RoomForm()
-#         if form.validate_on_submit():
-#             session['name'] = current_user.username
-#             session['room'] = form.room.data
-#             return redirect(url_for('.chat'))
-#         elif request.method == 'GET':
-#             form.room.data = session.get('room', '')
-#         return render_template('chat/_join_room.html', form=form)
-#
-#
-# @chat_bp.route('/chat', methods=['POST'])
-# def chat():
-#     if request.method != 'GET':
-#         pass
-#     else:
-#         chat_type = request.args.get('type', 'room')  # room or user
-#         room_name = request.args.get('rname', 'chat')
-#         user_id = request.args.get('uid')
-#         if chat_type == 'room':
-#             if room_name is not None:
-#                 # action for room
-#                 pass
-#             else:
-#                 pass
-#         else:
-#             if user_id is not None:
-#                 # action for user
-#                 pass
-#             else:
-#                 pass
 
 
 @chat_bp.route('/')
@@ -78,8 +40,15 @@ def connect():
     global online_users
     if current_user.is_authenticated and current_user not in online_users:
         online_users.append(current_user)
+        print("%s is connected." % current_user.username)
+
     join_room('chat')
-    emit('users info', {'count': len(online_users), 'users': render_template('chat/_users.html', users=online_users)},
+    r = rooms()
+    emit('users info',
+         {'amount': len(online_users),
+          'users': render_template('chat/_users.html', users=online_users),
+          'rooms_amount': len(r),
+          'rooms': render_template('chat/_rooms.html', rooms=r)},
          broadcast=True)
 
 
@@ -88,13 +57,17 @@ def disconnect():
     global online_users
     if current_user.is_authenticated and current_user in online_users:
         online_users.remove(current_user)
-    emit('users info', {'count': len(online_users), 'users': render_template('chat/_users.html', users=online_users)},
+        print("%s is disconnected." % current_user.username)
+    leave_room('chat')
+    emit('users info',
+         {'all_amount': len(online_users), 'all_users': render_template('chat/_users.html', users=online_users)},
          broadcast=True)
 
 
 @socketio.on('new message')
 def new_message(message_body):
-    message = Message(author=current_user._get_current_object(), body=message_body['body'],room_name=message_body['room_name'])
+    message = Message(author=current_user._get_current_object(), body=message_body['body'],
+                      room_name=message_body['room_name'])
     db.session.add(message)
     db.session.commit()
     emit('new message',
@@ -110,3 +83,10 @@ def new_message(message_body):
 def join(room_name):
     join_room(room_name.lower())
     emit('joined_room', {'room_name': room_name, 'user_name': current_user.username})
+    r = rooms()
+    emit('users info',
+         {'amount': len(online_users),
+          'users': render_template('chat/_users.html', users=online_users),
+          'rooms_amount': len(r),
+          'rooms': render_template('chat/_rooms.html', rooms=r)},
+         broadcast=True)
