@@ -21,7 +21,7 @@ def create_app(config_name=None):
     reg_blueprints(app)
     reg_extensions(app)
     reg_commands(app)
-    reg_jinja2(app)
+    # reg_jinja2(app)
     return app
 
 

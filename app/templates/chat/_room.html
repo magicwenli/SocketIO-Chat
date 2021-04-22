@@ -1,18 +1,10 @@
 <li class="active">
-    <div class="card">
-        <div class="card-body">
-            <div class="media">
-                {#                <div class="avatar me-3">#}
-                {#                    <img class="avatar sm rounded" src="{{ room.gravatar }}"#}
-                {#                         data-href="{{ url_for('chat.get_profile', user_id=message.author.id) }}">#}
-                {#                </div>#}
-                <div class="media-body overflow-hidden">
-                    <div class="d-flex align-items-center mb-1">
-                        {#                        TODO User Room onclick 事件完善 #}
-                        <a href="javascript:void(0);" onclick="">
-                            <h5 class="text-truncate mb-0 me-auto">{{ room }}</h5>
-                        </a>
-                    </div>
+    <div class="card room-card">
+        <div class="card-body media">
+            <div class="media-body overflow-hidden">
+                <div class="d-flex align-items-center mb-1">
+                    {#                        TODO User Room onclick 事件完善 #}
+                    <a href="#" class="h5 text-truncate mb-0 me-auto">{{ room }}</a>
                 </div>
             </div>
         </div>

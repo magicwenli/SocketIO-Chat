@@ -1,3 +1,49 @@
 {% for user in users %}
     {% include "chat/_user.html" %}
 {% endfor %}
+<script>
+    function private_chat(user_name) {
+        $('#chat-title').text(user_name);
+
+        $('.chat-content').html('')
+        var msg_url = '/p/' + user_name
+        var about_url = '/a/' + user_name
+
+        $.ajax({
+            type: 'GET',
+            url: msg_url,
+            success: function (data) {
+                $('.chat-content').html(data)
+            },
+            error: function (error) {
+                $('.chat-content').html('Can not get message from server')
+            }
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: about_url,
+            success: function (data) {
+                $('#chat-about').html(data.about);
+                $('#chat-title').attr("aria-label", data.sid)
+            },
+            error: function (error) {
+                $('#chat-about').html("");
+            }
+        });
+
+        scrollToBottom();
+    }
+
+    var $user_card = $('.user-card');
+    $user_card.bind('click', function (e) {
+        let user_name = e.currentTarget.getAttribute("aria-label");
+        console.log('enter room and chat with' + user_name);
+        private_chat(user_name);
+    });
+
+    function scrollToBottom() {
+        var chat_content = $('.chat-content');
+        chat_content.scrollTop(chat_content[0].scrollHeight);
+    }
+</script>

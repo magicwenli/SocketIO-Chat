@@ -1,3 +1,36 @@
 {% for room in rooms %}
     {% include "chat/_room.html" %}
 {%  endfor %}
+<script>
+    function enter_room(room_name) {
+        $('#chat-title').text(room_name);
+        $('.chat-content').html('')
+        $('#chat-about').html('');
+        var msg_url = '/chatroom/' + room_name
+
+        $.ajax({
+            type: 'GET',
+            url: msg_url,
+            success: function (data) {
+                $('.chat-content').html(data)
+            },
+            error: function (error) {
+                $('.chat-content').html('Can not get message from server')
+            }
+        });
+        scrollToBottom();
+    }
+
+    var $room_card = $('.room-card a');
+    $room_card.click(function (e) {
+        let room_name = e.target.innerText
+        $('#chat-title').attr("aria-label", room_name)
+        console.log(room_name);
+        enter_room(room_name);
+    });
+
+    function scrollToBottom() {
+        var chat_content = $('.chat-content');
+        chat_content.scrollTop(chat_content[0].scrollHeight);
+    }
+</script>

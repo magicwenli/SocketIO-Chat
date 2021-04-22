@@ -14,7 +14,7 @@ $(document).ready(function () {
     }
 
     function new_message(e) {
-        var room_name = $('#chat-title').text();
+        var room_name = $('#chat-title').attr("aria-label");
         var msg = {body: $textarea.val().trim(), room_name: room_name};
         if ((e.which === ENTER_KEY && !e.shiftKey) || (e.which === 1) && msg) {
             e.preventDefault();
@@ -30,9 +30,13 @@ $(document).ready(function () {
 
 
     socket.on('new message', function (data) {
-        $('.chat-content').append(data.message_html);
-        flask_moment_render_all();
-        scrollToBottom()
+        let room_name = $('#chat-title').attr("aria-label");
+        if (data.room_name === room_name) {
+            $('.chat-content').append(data.message_html);
+            flask_moment_render_all();
+            scrollToBottom()
+        }
+
     });
 
     // get and set userinfo html at sidebar
@@ -46,13 +50,15 @@ $(document).ready(function () {
 
     socket.on('joined_room', function (data) {
         $(".popOut").css("display", "none");
-        $('#chat-title').text(data.room_name)
+
         enter_room(data.room_name);
     })
 
     function enter_room(room_name) {
-        $('.chat-content').html('')
-        var msg_url = '/chatroom/' + room_name
+        $('#chat-title').text(room_name);
+        $('#chat-title').attr("aria-label", room_name)
+        $('.chat-content').html('');
+        var msg_url = '/chatroom/' + room_name;
 
         $.ajax({
             type: 'GET',
@@ -64,6 +70,7 @@ $(document).ready(function () {
                 $('.chat-content').html('Can not get message from server')
             }
         });
+        scrollToBottom();
     }
 
     function join_room(e) {
