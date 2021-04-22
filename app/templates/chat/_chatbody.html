@@ -3,7 +3,7 @@
         <div class="container-xxl">
             <div class="row align-items-center">
 
-                <div class="col-6 col-xl-4">
+                <div class="col-4 col-xl-4">
                     <div class="media">
                         <div class="avatar mx-3">
                             <div class="avatar rounded-circle no-image bg-primary text-light">
@@ -15,11 +15,15 @@
                                 <h6 class="h5 text-truncate mb-0 me-auto" id="chat-title" , aria-label="chat">chat</h6>
                             </div>
                             <div class="text-truncate" id="chat-about"></div>
-
                         </div>
+
                     </div>
                 </div>
-                <div class="col-6 col-xl-8 text-end">
+                <div class="video-screen col-4 col-xl-4 px-0 py-0 d-none">
+                    <video id="local-video" autoplay playsinline></video>
+                </div>
+                <div class="video-screen col-4 col-xl-4 px-0 py-0 d-none">
+                    <video id="remote-video" autoplay playsinline></video>
                 </div>
             </div>
         </div>
@@ -33,12 +37,13 @@
         <div class="container-xxl">
             {% if current_user.is_authenticated %}
                 <div class="row col-12 align-items-start">
-                <span class="input-group-text border-0">
-                <button class="btn btn-sm btn-link text-muted" data-toggle="tooltip" title="" type="button"
-                        data-original-title="Refresh">
-                    <i class="zmdi zmdi-refresh font-22"></i>
-                </button>
-                </span>
+
+                    <button id="btn-video" class="btn btn-sm btn-outline-primary px-1" data-toggle="tooltip" title=""
+                            type="button"
+                            data-original-title="Refresh">
+                        Video
+                    </button>
+
                 </div>
                 <div class="row align-items-start mt-2">
                     <div class="col-10"><textarea class="form-control" placeholder="Type your message..."

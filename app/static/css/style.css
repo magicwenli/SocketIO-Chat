@@ -106,7 +106,7 @@ footer {
     -webkit-box-flex: 1;
     flex-flow: column;
     -webkit-box-direction: normal;
-    width: 50%;
+    width: 60%;
     height: 90vh;
     position: fixed;
     margin-left: 400px;
@@ -286,4 +286,8 @@ li {
 
 .ani {
     animation: ani .3s ease-in-out;
+}
+
+video {
+    border: 2px solid #666666;
 }
