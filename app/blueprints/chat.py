@@ -96,6 +96,18 @@ def join(room_name):
     emit_users_info()
 
 
+@socketio.on('webrtc connect')
+def webrtc_connect(data):
+    print("webrtc Connected ", request.sid)
+    emit('webrtc ready', room=data['room_name'], skip_sid=request.sid)
+
+
+@socketio.on('webrtc data')
+def webrtc_data(data):
+    print('Message from {}: {}'.format(request.sid, data))
+    emit('webrtc data', data["data"], room=data["room_name"], skip_sid=request.sid)
+
+
 def emit_users_info():
     global online_users
     r = rooms()
