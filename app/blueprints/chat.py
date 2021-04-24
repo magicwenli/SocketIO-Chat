@@ -26,7 +26,6 @@ def home():
 # AJAX message interface
 @chat_bp.route('/chatroom/<room_name>', methods=['GET'])
 def room_message(room_name):
-    global online_users
     amount = current_app.config['MESSAGE_PER_PAGE']
     messages = Message.query.filter_by(in_room=1, room_name=room_name).order_by(Message.timestamp.asc())[-amount:]
     return render_template('chat/_messages.html', messages=messages)
@@ -52,25 +51,29 @@ def user_about(username):
 def connect():
     global online_users
     if current_user.is_authenticated and current_user not in online_users:
+        print("add user: ", current_user)
         online_users.append(current_user)
+        print(online_users)
         user_to_sid[current_user.username] = request.sid
         sid_to_user[request.sid] = current_user.username
         print("%s is connected." % current_user.username)
 
     join_room('chat')
-    emit_users_info()
+    emit_users_info(request.sid)
 
 
 @socketio.on('disconnect')
 def disconnect():
     global online_users
     if current_user.is_authenticated and current_user in online_users:
+        print("del user: ", current_user)
         online_users.remove(current_user)
+        print(online_users)
         del user_to_sid[current_user.username]
         del sid_to_user[request.sid]
         print("%s is disconnected." % current_user.username)
     leave_room('chat')
-    emit_users_info()
+    emit_users_info(request.sid)
 
 
 @socketio.on('new message')
@@ -86,14 +89,14 @@ def new_message(message_body):
           'gravatar': current_user.gravatar,
           'username': current_user.username,
           'user_id': current_user.id},
-         broadcast=True)
+         to=message_body['room_name'])
 
 
 @socketio.on('join room')
 def join(room_name):
     join_room(room_name)
     emit('joined_room', {'room_name': room_name, 'user_name': current_user.username})
-    emit_users_info()
+    emit_users_info(request.sid)
 
 
 @socketio.on('webrtc connect')
@@ -108,17 +111,16 @@ def webrtc_data(data):
     emit('webrtc data', data["data"], room=data["room_name"], skip_sid=request.sid)
 
 
-def emit_users_info():
+def emit_users_info(sid):
     global online_users
-    r = rooms()
+    r = rooms(sid=sid)
     print(current_user.username + " now is in: ", end="")
     print(r)
     emit('users info',
          {'amount': len(online_users),
           'users': render_template('chat/_users.html', users=online_users),
           'rooms_amount': len(r),
-          'rooms': render_template('chat/_rooms.html', rooms=r)},
-         broadcast=True)
+          'rooms': render_template('chat/_rooms.html', rooms=r)})
 
 
 def getUserFromUsername(username):

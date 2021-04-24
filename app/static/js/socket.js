@@ -73,6 +73,8 @@ $(document).ready(function () {
         scrollToBottom();
     }
 
+
+    // join room from popup panel
     function join_room(e) {
         var room_name = $('#room').val();
         socket.emit('join room', room_name);
@@ -231,4 +233,6 @@ $(document).ready(function () {
                 break;
         }
     };
+
+
 });
