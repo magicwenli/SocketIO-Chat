@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Blueprint, render_template, current_app, request
 from flask_login import current_user
 from flask_socketio import emit, join_room, rooms, leave_room
@@ -20,7 +22,7 @@ def home():
     amount = current_app.config['MESSAGE_PER_PAGE']
     messages = Message.query.filter_by(in_room=1, room_name='chat').order_by(Message.timestamp.asc())[-amount:]
 
-    return render_template('home.html', messages=messages, form=form)
+    return render_template('home.html', messages=messages, form=form, mode=1)
 
 
 # AJAX message interface
@@ -51,7 +53,7 @@ def user_about(username):
 def connect():
     global online_users
     if current_user.is_authenticated and current_user not in online_users:
-        print("add user: ", current_user)
+        emit("username", current_user.username)
         online_users.append(current_user)
         print(online_users)
         user_to_sid[current_user.username] = request.sid
@@ -79,17 +81,34 @@ def disconnect():
 @socketio.on('new message')
 def new_message(message_body):
     message = Message(author=current_user._get_current_object(), body=message_body['body'],
-                      room_name=message_body['room_name'])
+                      room_name=message_body['room_name'], timestamp=datetime.utcnow())
+
+    print(render_template('chat/_message.html', message=message, mode=0, self=1))
+    print(current_user)
+    print(message.author)
+    print(render_template('chat/_message.html', message=message, mode=0, self=0))
+
     db.session.add(message)
     db.session.commit()
+
+    # send to sender it self
     emit('new message',
-         {'message_html': render_template('chat/_message.html', message=message),
+         {'message_html': render_template('chat/_message.html', message=message, mode=0, flag=0),
+          'message_body': message_body,
+          'room_name': message_body['room_name'],
+          'gravatar': current_user.gravatar,
+          'username': current_user.username,
+          'user_id': current_user.id})
+    # send to other one
+
+    emit('new message',
+         {'message_html': render_template('chat/_message.html', message=message, mode=0, flag=1),
           'message_body': message_body,
           'room_name': message_body['room_name'],
           'gravatar': current_user.gravatar,
           'username': current_user.username,
           'user_id': current_user.id},
-         to=message_body['room_name'])
+         to=message_body['room_name'], skip_sid=request.sid)
 
 
 @socketio.on('join room')

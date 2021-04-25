@@ -1,7 +1,7 @@
 import hashlib
 from datetime import datetime
 
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.extends import db
@@ -35,6 +35,13 @@ class User(db.Model, UserMixin):
         return 'https://gravatar.loli.net/avatar/%s?d=monsterid' % self.email_hash
 
 
+class Guest(AnonymousUserMixin):
+    username = '匿名用户'
+
+
+login_manager.anonymous_user = Guest
+
+
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     in_room = db.Column(db.Boolean, default=1)
@@ -47,7 +54,7 @@ class Message(db.Model):
 
 class Room():
     users = []
-    name="chat"
+    name = "chat"
 
     def __init__(self, name):
         self.name = name

@@ -1,33 +1,70 @@
-{% if current_user ==message.author %}
-    <div class="message-box d-flex my-2 align-items-center justify-content-end">
-        <div class="message-body mx-3">
-            <span class="h6">{{ message.author.username }}</span>
-            <span class="timestamp text-muted">{{ moment(message.timestamp).format('lll') }}</span>
-            <div class="card d-flex align-items-start">
-                <div class="message-content p-3">
-                    {{ message.body|safe }}
+{# mode : 1 / 0 #}
+{% if mode==1 %}
+    {% if current_user == message.author %}
+        <div class="message-box d-flex my-2 align-items-center justify-content-end">
+            <div class="message-body mx-3">
+                <span class="h6">{{ message.author.username }}</span>
+                <span class="timestamp text-muted">{{ moment(message.timestamp).format('lll') }}</span>
+                <div class="card d-flex align-items-start">
+                    <div class="message-content p-3">
+                        {{ message.body|safe }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="mr-lg-3 me-2">
-            <img class="avatar sm rounded shadow-sm" src="{{ message.author.gravatar }}"
-                 data-href="#">
-        </div>
-    </div>
-{% else %}
-    <div class="message-box d-flex my-2 align-items-center justify-content-start">
-        <div class="mr-lg-3 me-2">
-            <img class="avatar sm rounded shadow-sm" src="{{ message.author.gravatar }}">
-        </div>
-        <div class="message-body mx-3">
-            <span class="h6">{{ message.author.username }}</span>
-            <span class="timestamp text-muted">{{ moment(message.timestamp).format('lll') }}</span>
-            <div class="card d-flex align-items-start">
-                <div class="message-content p-3">
-                    {{ message.body|safe }}
-                </div>
+            <div class="mr-lg-3 me-2">
+                <img class="avatar sm rounded shadow-sm" src="{{ message.author.gravatar }}"
+                     data-href="#">
             </div>
         </div>
+    {% else %}
+        <div class="message-box d-flex my-2 align-items-center justify-content-start">
+            <div class="mr-lg-3 me-2">
+                <img class="avatar sm rounded shadow-sm" src="{{ message.author.gravatar }}">
+            </div>
+            <div class="message-body mx-3">
+                <span class="h6">{{ message.author.username }}</span>
+                <span class="timestamp text-muted">{{ moment(message.timestamp).format('lll') }}</span>
+                <div class="card d-flex align-items-start">
+                    <div class="message-content p-3">
+                        {{ message.body|safe }}
+                    </div>
+                </div>
+            </div>
 
-    </div>
+        </div>
+    {% endif %}
+{% else %}
+    {% if flag==0 %}
+        <div class="message-box d-flex my-2 align-items-center justify-content-end">
+            <div class="message-body mx-3">
+                <span class="h6">{{ message.author.username }}</span>
+                <span class="timestamp text-muted">{{ moment(message.timestamp).format('lll') }}</span>
+                <div class="card d-flex align-items-start">
+                    <div class="message-content p-3">
+                        {{ message.body|safe }}
+                    </div>
+                </div>
+            </div>
+            <div class="mr-lg-3 me-2">
+                <img class="avatar sm rounded shadow-sm" src="{{ message.author.gravatar }}"
+                     data-href="#">
+            </div>
+        </div>
+    {% else %}
+        <div class="message-box d-flex my-2 align-items-center justify-content-start">
+            <div class="mr-lg-3 me-2">
+                <img class="avatar sm rounded shadow-sm" src="{{ message.author.gravatar }}">
+            </div>
+            <div class="message-body mx-3">
+                <span class="h6">{{ message.author.username }}</span>
+                <span class="timestamp text-muted">{{ moment(message.timestamp).format('lll') }}</span>
+                <div class="card d-flex align-items-start">
+                    <div class="message-content p-3">
+                        {{ message.body|safe }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    {% endif %}
 {% endif %}
