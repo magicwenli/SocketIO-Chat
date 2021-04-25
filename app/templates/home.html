@@ -19,7 +19,7 @@
 {# <script type="text/javascript" src="{{ url_for('static',filename='js/socket.io.min.js') }}"></script> #}
     <script src="https://cdn.bootcdn.net/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
 {#    <script type="text/javascript" src="{{ url_for('static',filename='js/moment-with-locales.min.js') }}"></script> #}
-    {{ moment.include_moment(local_js="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/locale/zh-cn.js") }}
+    {{ moment.include_moment(local_js="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js") }}
     <script type="text/javascript" src="{{ url_for('static',filename='js/script.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static',filename='js/socket.js') }}"></script>
 {% endblock %}
