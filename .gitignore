@@ -57,3 +57,8 @@ docs/_build/
 
 plan.md
 
+# Python virtual environment
+venv/
+
+# development database
+data-env.db
