@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, current_app, request
 from flask_login import current_user
 from flask_socketio import emit, join_room, rooms, leave_room
 
-from app.extends import socketio, db
+from app.extends import socketio, db, logger
 from app.forms import RoomForm
 from app.models import Message, User
 
@@ -55,8 +55,8 @@ def connect():
         online_users.append(user)
         user_to_sid[user.username] = request.sid
         sid_to_user[request.sid] = user.username
-        print("%s is connected." % user.username)
-    print(online_users)
+        logger.info("%s is connected." % user.username)
+    logger.info("online users: {}".format(online_users))
     join_room('chat')
     emit_users_info(request.sid)
 
@@ -64,15 +64,15 @@ def connect():
 @socketio.on('disconnect')
 def disconnect():
     global online_users
-    # if current_user.is_authenticated and current_user in online_users:
-    #     try:
-    #         online_users.remove(current_user)
-    #         del user_to_sid[current_user.username]
-    #         del sid_to_user[request.sid]
-    #         print(online_users)
-    #         print("%s is disconnected." % current_user.username)
-    #     except Exception as e:
-    #         print(e)
+    if current_user.is_authenticated and current_user in online_users:
+        try:
+            online_users.remove(current_user)
+            del user_to_sid[current_user.username]
+            del sid_to_user[request.sid]
+            logger.info("%s is disconnected." % current_user.username)
+            logger.info("online users: {}".format(online_users))
+        except Exception as e:
+            logger.error(e)
 
     leave_room('chat')
     emit_users_info(request.sid)
@@ -114,20 +114,19 @@ def join(room_name):
 
 @socketio.on('webrtc connect')
 def webrtc_connect(data):
-    print("webrtc Connected ", request.sid)
+    logger.info("webrtc Connected, sid: {}".format(request.sid))
     emit('webrtc ready', room=data['room_name'], skip_sid=request.sid)
 
 
 @socketio.on('webrtc data')
 def webrtc_data(data):
-    print('Message from {}: {}'.format(request.sid, data))
+    logger.info('Message from {}: {}'.format(request.sid, data))
     emit('webrtc data', data["data"], room=data["room_name"], skip_sid=request.sid)
 
 
 def emit_users_info(sid):
     r = rooms(sid=sid)
-    print(current_user.username + " now is in: ", end="")
-    print(r)
+    logger.info("{} now is in: {}".format(current_user.username, r))
     emit('users info',
          {'amount': len(online_users),
           'users': render_template('chat/_users.html', users=online_users),

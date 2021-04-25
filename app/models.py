@@ -1,10 +1,10 @@
 import hashlib
 from datetime import datetime
 
-from flask_login import UserMixin, AnonymousUserMixin, login_manager
+from flask_login import UserMixin, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app.extends import db
+from app.extends import db, login_manager
 
 
 class User(db.Model, UserMixin):
@@ -39,11 +39,8 @@ class User(db.Model, UserMixin):
 
 
 class Guest(AnonymousUserMixin):
-    username = '匿名用户'
-
-    @property
-    def confirmed(self):
-        return False
+    def __init__(self):
+        self.username = 'Guest'
 
 
 login_manager.anonymous_user = Guest
