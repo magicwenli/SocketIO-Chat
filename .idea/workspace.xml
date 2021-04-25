@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6fe9e218-0f10-4521-87b3-e89fa541effa" name="Default Changelist" comment="add video stop switch">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/chat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/chat/_message.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/chat/_message.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data-dev.db" beforeDir="false" afterPath="$PROJECT_DIR$/data-dev.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -237,7 +237,7 @@
       <workItem from="1619091967981" duration="4528000" />
       <workItem from="1619158349824" duration="17000" />
       <workItem from="1619182007998" duration="1132000" />
-      <workItem from="1619264730190" duration="11897000" />
+      <workItem from="1619264730190" duration="14555000" />
     </task>
     <task id="LOCAL-00001" summary="add README.md &amp; generate requirements.txt">
       <created>1617817002795</created>
@@ -393,7 +393,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619275372153</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fix bug: 现在多人聊天内容能够正确放置了">
+      <created>1619334128078</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1619334128078</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -443,13 +450,25 @@
     <MESSAGE value="room list &amp;&amp; room select &amp;&amp; user select is now available." />
     <MESSAGE value="local video stream is available" />
     <MESSAGE value="add video stop switch" />
-    <option name="LAST_COMMIT_MESSAGE" value="add video stop switch" />
+    <MESSAGE value="fix bug: 现在多人聊天内容能够正确放置了" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug: 现在多人聊天内容能够正确放置了" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/blueprints/chat.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/SocketIO_Chat$SocketIO_Chat.coverage" NAME="SocketIO Chat Coverage Results" MODIFIED="1619333897772" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SocketIO_Chat$SocketIO_Chat.coverage" NAME="SocketIO Chat Coverage Results" MODIFIED="1619336485864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask__wsgi_py_app_.coverage" NAME="Flask (wsgi.py:app) Coverage Results" MODIFIED="1617978263070" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Flask_SocketIO_Chat_master$Flask_SocketIO_Chat_master.coverage" NAME="Flask-SocketIO-Chat-master Coverage Results" MODIFIED="1618159531189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

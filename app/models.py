@@ -30,6 +30,9 @@ class User(db.Model, UserMixin):
         if self.email is not None and self.email_hash is None:
             self.email_hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
+    def __repr__(self):
+        return u"<User: {}>".format(self.username)
+
     @property
     def gravatar(self):
         return 'https://gravatar.loli.net/avatar/%s?d=monsterid' % self.email_hash
@@ -37,6 +40,10 @@ class User(db.Model, UserMixin):
 
 class Guest(AnonymousUserMixin):
     username = '匿名用户'
+
+    @property
+    def confirmed(self):
+        return False
 
 
 login_manager.anonymous_user = Guest

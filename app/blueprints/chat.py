@@ -16,8 +16,6 @@ sid_to_user = {}
 
 @chat_bp.route('/')
 def home():
-    global online_rooms
-
     form = RoomForm()
     amount = current_app.config['MESSAGE_PER_PAGE']
     messages = Message.query.filter_by(in_room=1, room_name='chat').order_by(Message.timestamp.asc())[-amount:]
@@ -52,14 +50,13 @@ def user_about(username):
 @socketio.on('connect')
 def connect():
     global online_users
-    if current_user.is_authenticated and current_user not in online_users:
-        emit("username", current_user.username)
-        online_users.append(current_user)
-        print(online_users)
-        user_to_sid[current_user.username] = request.sid
-        sid_to_user[request.sid] = current_user.username
-        print("%s is connected." % current_user.username)
-
+    user = current_user._get_current_object()
+    if current_user.is_authenticated and user not in online_users:
+        online_users.append(user)
+        user_to_sid[user.username] = request.sid
+        sid_to_user[request.sid] = user.username
+        print("%s is connected." % user.username)
+    print(online_users)
     join_room('chat')
     emit_users_info(request.sid)
 
@@ -67,13 +64,16 @@ def connect():
 @socketio.on('disconnect')
 def disconnect():
     global online_users
-    if current_user.is_authenticated and current_user in online_users:
-        print("del user: ", current_user)
-        online_users.remove(current_user)
-        print(online_users)
-        del user_to_sid[current_user.username]
-        del sid_to_user[request.sid]
-        print("%s is disconnected." % current_user.username)
+    # if current_user.is_authenticated and current_user in online_users:
+    #     try:
+    #         online_users.remove(current_user)
+    #         del user_to_sid[current_user.username]
+    #         del sid_to_user[request.sid]
+    #         print(online_users)
+    #         print("%s is disconnected." % current_user.username)
+    #     except Exception as e:
+    #         print(e)
+
     leave_room('chat')
     emit_users_info(request.sid)
 
@@ -82,12 +82,6 @@ def disconnect():
 def new_message(message_body):
     message = Message(author=current_user._get_current_object(), body=message_body['body'],
                       room_name=message_body['room_name'], timestamp=datetime.utcnow())
-
-    print(render_template('chat/_message.html', message=message, mode=0, self=1))
-    print(current_user)
-    print(message.author)
-    print(render_template('chat/_message.html', message=message, mode=0, self=0))
-
     db.session.add(message)
     db.session.commit()
 
@@ -131,7 +125,6 @@ def webrtc_data(data):
 
 
 def emit_users_info(sid):
-    global online_users
     r = rooms(sid=sid)
     print(current_user.username + " now is in: ", end="")
     print(r)
@@ -143,7 +136,6 @@ def emit_users_info(sid):
 
 
 def getUserFromUsername(username):
-    global online_users
     flag = 0
     user = User()
     for u in online_users:
