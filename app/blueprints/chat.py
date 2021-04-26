@@ -36,6 +36,12 @@ def room_message(room_name):
 def private_chat(username):
     # return redirect('http://127.0.0.1/p/' + uuid)
     sid = user_to_sid[username]
+    # BUG: User A and B will both join the room opposite, so one con only see
+    # messages sent by himself. In order to receive messages, he must back to
+    # his private room. What's more, if more than one user send private
+    # messages to A, A will see messages from different users are mixed.
+    # So such a feature is like a message board instead of a private p2p chat.
+    # TODO: Use a (id, id) pair as the identifier of a p2p room
     return room_message(sid)
 
 
