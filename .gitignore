@@ -61,4 +61,4 @@ plan.md
 venv/
 
 # development database
-data-env.db
+data-dev.db
