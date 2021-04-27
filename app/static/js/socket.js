@@ -123,13 +123,13 @@ $(document).ready(function () {
         if (video_on === 0) {
             $(".video-screen").removeClass("d-none");
             $(".video-screen").addClass("d-block");
-            getLocalVideo();
             video_on = 1;
+            getLocalVideo();
         } else {
             $(".video-screen").removeClass("d-block");
             $(".video-screen").addClass("d-none");
-            stopLocalVideo();
             video_on = 0;
+            stopLocalVideo();
         }
 
     })
