@@ -1,4 +1,11 @@
-{# mode : 1 / 0 #}
+{#render a message box#}
+{#-> mode == 1: for a series of messages render#}
+{#    -> current_user == message.author:  align right#}
+{#    -> others:                          align left#}
+{#-> mode == 0: for single message render#}
+{#    -> flag == 0:                       align right#}
+{#    -> others:                          align left#}
+
 {% if mode==1 %}
     {% if current_user == message.author %}
         <div class="message-box d-flex my-2 align-items-center justify-content-end">

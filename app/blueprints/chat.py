@@ -28,7 +28,7 @@ def home():
 def room_message(room_name):
     amount = current_app.config['MESSAGE_PER_PAGE']
     messages = Message.query.filter_by(in_room=1, room_name=room_name).order_by(Message.timestamp.asc())[-amount:]
-    return render_template('chat/_messages.html', messages=messages)
+    return render_template('chat/_messages.html', messages=messages, mode=1)
 
 
 # experimental p2p chat
