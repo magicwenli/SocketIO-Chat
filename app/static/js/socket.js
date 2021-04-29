@@ -99,9 +99,9 @@ $(document).ready(function () {
     const PC_CONFIG = {
         iceServers: [
             {
-               url: 'stun:' + TURN_SERVER_URL
-               //username: TURN_SERVER_USERNAME,
-               //credential: TURN_SERVER_CREDENTIAL
+                url: 'stun:' + TURN_SERVER_URL
+                //username: TURN_SERVER_USERNAME,
+                //credential: TURN_SERVER_CREDENTIAL
             }
         ]
     };
@@ -116,17 +116,17 @@ $(document).ready(function () {
     var state = 'init';
 
     socket.on('webrtc data', (data) => {
-        console.log('Data received: ', data);
+        console.log('webrtc data. data received: ', data);
         handleSignalingData(data);
     });
 
     socket.on('webrtc joined', (data) => {
-        console.log('Data received: ', data);
+        console.log('webrtc joined. data received: ', data);
         createPeerConnection();
     });
 
     socket.on('webrtc ready', () => {
-        console.log('Ready');
+        console.log('webrtc ready');
         // Connection with signaling server is ready, and so is local stream
         createPeerConnection();
         sendOffer();
@@ -166,7 +166,6 @@ $(document).ready(function () {
     })
 
     function getLocalVideo() {
-        console.log(adapter.browserDetails.browser);
         var constraints = {
             audio: true, video: {
                 width: {min: 320, max: 480},
@@ -185,6 +184,7 @@ $(document).ready(function () {
                 socket.emit("webrtc connect", {
                     "room_name": $('#chat-title').attr("aria-label")
                 });
+                console.log("webrtc connect..");
             })
             .catch(function (err) {
                 console.log(err.name + ": " + err.message);
@@ -192,6 +192,7 @@ $(document).ready(function () {
     }
 
     function stopLocalVideo() {
+        console.log("stop local video");
         if (local_stream.active) {
             local_stream.getTracks()[0].stop(); // stop video
             local_stream.getTracks()[1].stop(); // stop audio
