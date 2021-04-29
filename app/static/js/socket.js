@@ -92,25 +92,19 @@ $(document).ready(function () {
     /* control webRTC */
     // I got HUGE help from https://pfertyk.me/2020/03/webrtc-a-working-example/
 
-    const TURN_SERVER_URL = '{PUBLIC_IP}:3478';
-    const TURN_SERVER_USERNAME = 'username';
-    const TURN_SERVER_CREDENTIAL = 'credential';
+    const TURN_SERVER_URL = 'stun.miwifi.com:3478';
+    const TURN_SERVER_USERNAME = 'test';
+    const TURN_SERVER_CREDENTIAL = 'test';
 
-    // const PC_CONFIG = {
-    //     iceServers: [
-    //         {
-    //             urls: 'turn:' + TURN_SERVER_URL + '?transport=tcp',
-    //             username: TURN_SERVER_USERNAME,
-    //             credential: TURN_SERVER_CREDENTIAL
-    //         },
-    //         {
-    //             urls: 'turn:' + TURN_SERVER_URL + '?transport=udp',
-    //             username: TURN_SERVER_USERNAME,
-    //             credential: TURN_SERVER_CREDENTIAL
-    //         }
-    //     ]
-    // };
-    const PC_CONFIG = {};
+    const PC_CONFIG = {
+        iceServers: [
+            {
+               url: 'stun:' + TURN_SERVER_URL
+               //username: TURN_SERVER_USERNAME,
+               //credential: TURN_SERVER_CREDENTIAL
+            }
+        ]
+    };
 
     var $btn_video = $('#btn-video');
     var video_on = 0; // show if video is on

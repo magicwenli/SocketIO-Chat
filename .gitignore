@@ -62,3 +62,7 @@ venv/
 
 # development database
 data-dev.db
+
+# private
+*.xyz/
+turnserver.conf
