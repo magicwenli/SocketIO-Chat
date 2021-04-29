@@ -71,5 +71,8 @@ class Room():
         if user in self.users:
             self.users.remove(user)
 
+    def length(self):
+        return len(self.users)
+
     def __repr__(self):
-        return self.name
+        return u'<Room: {}>'.format(self.name)

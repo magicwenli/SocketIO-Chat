@@ -1,3 +1,5 @@
+"use strict"
+
 var socket;
 $(document).ready(function () {
 
@@ -90,18 +92,43 @@ $(document).ready(function () {
     /* control webRTC */
     // I got HUGE help from https://pfertyk.me/2020/03/webrtc-a-working-example/
 
+    const TURN_SERVER_URL = '{PUBLIC_IP}:3478';
+    const TURN_SERVER_USERNAME = 'username';
+    const TURN_SERVER_CREDENTIAL = 'credential';
+
+    // const PC_CONFIG = {
+    //     iceServers: [
+    //         {
+    //             urls: 'turn:' + TURN_SERVER_URL + '?transport=tcp',
+    //             username: TURN_SERVER_USERNAME,
+    //             credential: TURN_SERVER_CREDENTIAL
+    //         },
+    //         {
+    //             urls: 'turn:' + TURN_SERVER_URL + '?transport=udp',
+    //             username: TURN_SERVER_USERNAME,
+    //             credential: TURN_SERVER_CREDENTIAL
+    //         }
+    //     ]
+    // };
     const PC_CONFIG = {};
+
     var $btn_video = $('#btn-video');
-    var video_on = 0; // show if videos on
+    var video_on = 0; // show if video is on
     var local_stream;
     var $local_video = $('#local-video')[0];
     var remote_stream;
     var $remote_video = $('#remote-video')[0];
     var pc; // peer_connection
+    var state = 'init';
 
     socket.on('webrtc data', (data) => {
         console.log('Data received: ', data);
         handleSignalingData(data);
+    });
+
+    socket.on('webrtc joined', (data) => {
+        console.log('Data received: ', data);
+        createPeerConnection();
     });
 
     socket.on('webrtc ready', () => {
@@ -110,6 +137,15 @@ $(document).ready(function () {
         createPeerConnection();
         sendOffer();
     });
+
+    socket.on('full', () => {
+        closePeerConnection();
+        stopLocalVideo();
+
+        alert('This video chat had started, exiting.')
+
+        // TODO stop streaming && hide video
+    })
 
     let sendData = (data) => {
         socket.emit('webrtc data', {
@@ -120,22 +156,30 @@ $(document).ready(function () {
 
 
     $btn_video.on("click", function () {
-        if (video_on === 0) {
+        if (video_on === 0) {   // start a video sharing
             $(".video-screen").removeClass("d-none");
             $(".video-screen").addClass("d-block");
             video_on = 1;
             getLocalVideo();
-        } else {
+        } else {                // close a video sharing
             $(".video-screen").removeClass("d-block");
             $(".video-screen").addClass("d-none");
             video_on = 0;
+            closePeerConnection();
             stopLocalVideo();
         }
 
     })
 
     function getLocalVideo() {
-        var constraints = {audio: true, video: {width: 247, height: 156}};
+        console.log(adapter.browserDetails.browser);
+        var constraints = {
+            audio: true, video: {
+                width: {min: 320, max: 480},
+                height: {min: 240, max: 360},
+                require: ["width", "height"]
+            }
+        };
 
         navigator.mediaDevices.getUserMedia(constraints)
             .then(function (mediaStream) {
@@ -176,6 +220,14 @@ $(document).ready(function () {
             console.error('PeerConnection failed: ', error);
         }
     };
+
+    function closePeerConnection() {
+        console.log('PeerConnection closed');
+        if (pc) {
+            pc.close();
+            pc = null;
+        }
+    }
 
     let sendOffer = () => {
         console.log('Send offer');

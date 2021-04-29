@@ -6,9 +6,14 @@ from flask_socketio import emit, join_room, rooms, leave_room
 
 from app.extends import socketio, db, logger
 from app.forms import RoomForm
-from app.models import Message, User
+from app.models import Message, User, Room
 
 chat_bp = Blueprint('chat', __name__)
+
+online_rooms = []  # set
+room = Room('chat')
+online_rooms.append(room)
+
 online_users = []
 user_to_sid = {}  # 映射username to session.id
 sid_to_user = {}
@@ -58,12 +63,15 @@ def connect():
     global online_users
     user = current_user._get_current_object()
     if current_user.is_authenticated and user not in online_users:
+        print(online_users)
         online_users.append(user)
+        print(online_users)
         user_to_sid[user.username] = request.sid
         sid_to_user[request.sid] = user.username
         logger.info("%s is connected." % user.username)
     logger.info("online users: {}".format(online_users))
     join_room('chat')
+    getRoomFromRoomname('chat').add_user(request.sid)
     emit_users_info(request.sid)
 
 
@@ -81,6 +89,7 @@ def disconnect():
             logger.error(e)
 
     leave_room('chat')
+    getRoomFromRoomname('chat').remove_user(request.sid)
     emit_users_info(request.sid)
 
 
@@ -114,14 +123,41 @@ def new_message(message_body):
 @socketio.on('join room')
 def join(room_name):
     join_room(room_name)
+    room = Room(room_name)
+    if room not in online_rooms:
+        online_rooms.append(room)
+    getRoomFromRoomname(room_name).add_user(request.sid)
     emit('joined_room', {'room_name': room_name, 'user_name': current_user.username})
     emit_users_info(request.sid)
 
 
+#
+# webrtc
+#
+# 'webrtc connect' -> user click video button, ready to start a video chat.
 @socketio.on('webrtc connect')
 def webrtc_connect(data):
-    logger.info("webrtc Connected, sid: {}".format(request.sid))
-    emit('webrtc ready', room=data['room_name'], skip_sid=request.sid)
+    room = data['room_name']
+    user_amount = getRoomFromRoomname(room).length()
+    logger.info("WebRTC connected. sid: {}, room: {}, user amount: {}".format(request.sid, room, user_amount))
+
+    if user_amount < 3:
+        # the first and second user will trigger
+        logger.info('sid: {} joined video sharing.'.format(request.sid))
+        emit('webrtc joined',
+             {"room": room, "sid": request.sid},
+             room=room, skip_sid=request.sid)
+        if user_amount > 1:
+            # the second user ~
+            logger.info('webrtc ready.')
+            emit('webrtc ready',
+                 {"room": room, "sid": request.sid},
+                 room=room, skip_sid=request.sid)
+    else:
+        # the third user ~
+        logger.info('sid: {} joined, but room is full, exiting'.format(request.sid))
+        leave_room(room)
+        emit('full')  # the third user will be alerted and stop streaming
 
 
 @socketio.on('webrtc data')
@@ -137,10 +173,11 @@ def emit_users_info(sid):
          {'amount': len(online_users),
           'users': render_template('chat/_users.html', users=online_users),
           'rooms_amount': len(r),
-          'rooms': render_template('chat/_rooms.html', rooms=r)})
+          'rooms': render_template('chat/_rooms.html', rooms=r)}, broadcast=True)
 
 
 def getUserFromUsername(username):
+    global online_users
     flag = 0
     user = User()
     for u in online_users:
@@ -150,5 +187,20 @@ def getUserFromUsername(username):
             break
     if flag == 1:
         return user
+    else:
+        return None
+
+
+def getRoomFromRoomname(roomname):
+    global online_rooms
+    flag = 0
+    room: Room('chat')
+    for r in online_rooms:
+        if r.name == roomname:
+            flag = 1
+            room = r
+            break
+    if flag == 1:
+        return room
     else:
         return None

@@ -38,7 +38,7 @@
     var $user_card = $('.user-card');
     $user_card.bind('click', function (e) {
         let user_name = e.currentTarget.getAttribute("aria-label");
-        console.log('enter room and chat with' + user_name);
+        console.log('enter room and chat with ' + user_name);
         private_chat(user_name);
     });
 
