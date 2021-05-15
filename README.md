@@ -12,6 +12,8 @@ A simple Chatroom server including those features:
 
 - p2p chat, file share, etc
 
+Read more please click [here](https://magicwenli.github.io/2021/04/14/Socket-IO-Chatroom-%E5%B0%8F%E8%AE%B0.html).
+
 ### Usage
 
 ```shell
